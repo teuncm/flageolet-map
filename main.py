@@ -7,14 +7,16 @@ scale_length = 65
 # Number of frets to show.
 frets = np.arange(1, 25)
 # Number of harmonics to show nodes of.
-harmonics = [2, 3, 4, 5, 6, 7]
+harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
 
 def main():
-  _, ax = plt.subplots(figsize=(18, 2.5), layout="constrained")
+  plt.rc('font', size=18)
+
+  _, ax = plt.subplots(figsize=(50, 2.5), layout="constrained", dpi=30)
 
   # Figure styling.
-  ax.axhline(1, alpha=0.25, color="blue")
-  ax.axhline(0, alpha=0.25, color="blue")
+  ax.axhline(1, alpha=0.25, color="blue", linewidth=0.5)
+  ax.axhline(0, alpha=0.25, color="blue", linewidth=0.5)
   ax.set_xlim([0, scale_length])
   ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
   ax.set_ylim([-0.5, 1.5])
@@ -27,7 +29,7 @@ def main():
     for numerator in range(1, harmonic):
       fraction = scale_length * numerator / harmonic
 
-      ax.plot(fraction, 0, color="black", marker="|", ms=1000, alpha=0.25)
+      ax.plot(fraction, 0, color="black", marker="|", ms=1000, alpha=0.25, linewidth=0.5)
       ax.text(fraction, 0, rf"${harmonic}f_0$", horizontalalignment="center", verticalalignment="center", bbox=bbox_style)
 
   # Mark frets with a single dot.
@@ -39,7 +41,7 @@ def main():
     # Use equal temperment for fret spacing.
     distance = scale_length - scale_length / 2 ** (fret / 12)
     
-    ax.plot(distance, 1, color="black", marker="|", ms=50)
+    ax.plot(distance, 1, color="black", marker="|", ms=50, linewidth=0.5)
     ax.text(distance, 1, f"{fret}", horizontalalignment="center", verticalalignment="center", bbox=bbox_style)
 
     if fret in marked_frets:
@@ -48,8 +50,8 @@ def main():
     if fret in marked_octaves:
       ax.text(distance, 0.5, f"●●", horizontalalignment="center", verticalalignment="center")
 
-  plt.savefig("flageolets.png", bbox_inches="tight", dpi=400)
-  plt.show()
+  plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
+  # plt.show()
 
 if __name__ == "__main__":
   main()

@@ -12,7 +12,7 @@ harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
 def main():
   plt.rc('font', size=18)
 
-  _, ax = plt.subplots(figsize=(50, 2.5), layout="constrained", dpi=30)
+  _, ax = plt.subplots(figsize=(40, 2.5), layout="constrained", dpi=30)
 
   # Figure styling.
   ax.axhline(1, alpha=0.25, color="blue", linewidth=0.5)

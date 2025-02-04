@@ -29,7 +29,7 @@ def main():
     for numerator in range(1, harmonic):
       fraction = scale_length * numerator / harmonic
 
-      ax.plot(fraction, 0, color="black", marker="|", ms=1000, alpha=0.4, markeredgewidth=0.4)
+      ax.plot(fraction, 0, color="black", marker="|", ms=1000, alpha=0.3, markeredgewidth=0.5)
       ax.text(fraction, 0, rf"${harmonic}f_0$", horizontalalignment="center", verticalalignment="center", bbox=bbox_style)
 
   # Mark frets with a single dot.
@@ -41,7 +41,7 @@ def main():
     # Use equal temperment for fret spacing.
     distance = scale_length - scale_length / 2 ** (fret / 12)
     
-    ax.plot(distance, 1, color="black", marker="|", ms=50, markeredgewidth=0.4)
+    ax.plot(distance, 1, color="black", marker="|", ms=50, markeredgewidth=0.5)
     ax.text(distance, 1, f"{fret}", horizontalalignment="center", verticalalignment="center", bbox=bbox_style)
 
     if fret in marked_frets:

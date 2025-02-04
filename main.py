@@ -48,7 +48,7 @@ def main():
     if fret in marked_octaves:
       ax.text(distance, 0.5, f"●●", horizontalalignment="center", verticalalignment="center")
 
-  plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
+  plt.savefig("flageolets.png", bbox_inches="tight", dpi=400)
   plt.show()
 
 if __name__ == "__main__":

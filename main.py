@@ -14,7 +14,7 @@ def main():
   plt.rc('font', size=10)
   plt.rc('font', family="monospace")
 
-  _, ax = plt.subplots(figsize=(18, 2.8), layout="constrained")
+  _, ax = plt.subplots(figsize=(18, 3), layout="constrained")
 
   # Figure styling.
   ax.axhline(1, alpha=0.25, color="blue", linewidth=0.5)
@@ -40,9 +40,9 @@ def main():
       ax.text(distance, 0, rf"${roundedNumCents:+}$", horizontalalignment="center", verticalalignment="top", bbox=bbox_style)
 
   # Mark frets with a single dot.
-  marked_frets = [3, 5, 7, 9, 15, 17, 19, 21]
+  marked_frets = [3, 5, 7, 9, 15, 17, 19, 21, 27, 29, 31, 33]
   # Mark octaves with two dots.
-  marked_octaves = [12, 24]
+  marked_octaves = [12, 24, 36]
 
   for fret in frets:
     # Use equal temperament for fret spacing calculations.
@@ -57,7 +57,7 @@ def main():
     if fret in marked_octaves:
       ax.text(distance, 0.5, f"●●", horizontalalignment="center", verticalalignment="center")
 
-  plt.title("Fretboard locations of first 9 flageolets with cents detune from nearest note")
+  plt.title("Fretboard locations of first 9 flageolets with detune (ct) from nearest note")
   plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
   plt.show()
 

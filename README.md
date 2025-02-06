@@ -34,8 +34,8 @@ Detune can be measured in cents (ct) and semitones (st). One semitone is exactly
 
 $$ st = 12*log_2(\frac{f_1}{f_2}) $$
 
-Assuming the first frequency is lies on an equally tempered scale, the cent offset of the second frequency away from the nearest note on the equally tempered scale is given by
+Assuming the first frequency lies exactly on an equally tempered scale, every whole semitone away will also lie on the equally tempered scale. Therefore, the signed cent offset of the second frequency away from the nearest note on the equally tempered scale is given by
 
 $$ ct = 100 * (st - round(st)) $$
 
-which is the same measure that can be seen on guitar tuners.
+which is the same measure as commonly seen on digital guitar tuners.

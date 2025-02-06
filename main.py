@@ -7,7 +7,7 @@ import math
 scale_length = 100
 # Number of frets to show.
 frets = np.arange(1, 25)
-# Number of harmonics to show nodes of.
+# Harmonics to show nodes of.
 harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
 
 def main():
@@ -30,12 +30,14 @@ def main():
   for harmonic in reversed(harmonics):
     for numerator in range(1, harmonic):
       distance = scale_length * numerator / harmonic
-      semitones = freqRatioToSemitones(harmonic)
-      cents = round(100 * (semitones - round(semitones)))
+      numSemitones = freqRatioToSemitones(harmonic)
+      # Calculate cent offset from nearest equally tempered note.
+      numCents = 100 * (numSemitones - round(numSemitones))
+      roundedNumCents = round(numCents)
 
       ax.plot(distance, 0, color="black", marker="|", ms=1000, alpha=0.3, markeredgewidth=0.5)
       ax.text(distance, 0, rf"${harmonic}f_0$", horizontalalignment="center", verticalalignment="bottom", bbox=bbox_style)
-      ax.text(distance, 0, rf"${cents:+}$", horizontalalignment="center", verticalalignment="top", bbox=bbox_style)
+      ax.text(distance, 0, rf"${roundedNumCents:+}$", horizontalalignment="center", verticalalignment="top", bbox=bbox_style)
 
   # Mark frets with a single dot.
   marked_frets = [3, 5, 7, 9, 15, 17, 19, 21]
@@ -43,7 +45,7 @@ def main():
   marked_octaves = [12, 24]
 
   for fret in frets:
-    # Use equal temperment for fret spacing.
+    # Use equal temperament for fret spacing calculations.
     distance = scale_length - scale_length / 2 ** (fret / 12)
     
     ax.plot(distance, 1, color="black", marker="|", ms=50, markeredgewidth=0.5)
@@ -55,14 +57,15 @@ def main():
     if fret in marked_octaves:
       ax.text(distance, 0.5, f"●●", horizontalalignment="center", verticalalignment="center")
 
-  plt.title("Fretboard locations of first 9 flageolets with detune from nearest note")
+  plt.title("Fretboard locations of first 9 flageolets with cents detune from nearest note")
   plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
   plt.show()
 
 def freqRatioToSemitones(freqRatio):
-  cents = 12 * math.log(freqRatio, 2)
+  """Convert a frequency ratio to tonal distance in semitones."""
+  numSemitones = 12 * math.log(freqRatio, 2)
 
-  return cents
+  return numSemitones
 
 if __name__ == "__main__":
   main()

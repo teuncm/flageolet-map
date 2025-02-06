@@ -86,7 +86,7 @@ def main():
         pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
 
         ax.plot(
-            distance, 1, color="gray", marker="|", ms=70, alpha=1, markeredgewidth=1
+            distance, 1, color="black", marker="|", ms=70, alpha=1, markeredgewidth=1
         )
         ax.text(
             distance,

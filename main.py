@@ -19,7 +19,7 @@ def main():
     plt.rc("font", size=10)
     plt.rc("font", family="monospace")
 
-    _, ax = plt.subplots(figsize=(18, 3.5), layout="constrained")
+    _, ax = plt.subplots(figsize=(18, 3.6), layout="constrained")
 
     # Figure styling.
     ax.axhline(1, alpha=1, color="darkorange", linewidth=1, label="frets")
@@ -58,8 +58,8 @@ def main():
                 color="black",
                 marker="|",
                 ms=1000,
-                alpha=0.3,
-                markeredgewidth=0.5,
+                alpha=0.22,
+                markeredgewidth=1,
             )
             ax.text(
                 distance,
@@ -85,7 +85,9 @@ def main():
         pitch_class_idx = (root_idx + fret) % 12
         pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
 
-        ax.plot(distance, 1, color="black", marker="|", ms=60, markeredgewidth=0.5)
+        ax.plot(
+            distance, 1, color="gray", marker="|", ms=70, alpha=1, markeredgewidth=1
+        )
         ax.text(
             distance,
             1,

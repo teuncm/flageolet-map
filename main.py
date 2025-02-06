@@ -12,32 +12,44 @@ frets = np.arange(1, 25)
 # Harmonics to show nodes of.
 harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
 # Root note of string.
-root_note = 0
+root_note = "E"
 
 
 def main():
     plt.rc("font", size=10)
     plt.rc("font", family="monospace")
 
-    _, ax = plt.subplots(figsize=(18, 3), layout="constrained")
+    _, ax = plt.subplots(figsize=(18, 3.5), layout="constrained")
 
     # Figure styling.
-    ax.axhline(1, alpha=0.25, color="blue", linewidth=0.5)
-    ax.axhline(0, alpha=0.25, color="blue", linewidth=0.5)
+    ax.axhline(1, alpha=1, color="darkorange", linewidth=1, label="frets")
+    ax.axhline(0, alpha=1, color="darkblue", linewidth=1, label="flageolets")
     ax.set_xlim([0, scale_length])
     ax.xaxis.set_major_locator(ticker.MultipleLocator(10))
     ax.set_ylim([-0.5, 1.5])
     ax.set_xlabel("Distance from nut to bridge (%)")
     ax.get_yaxis().set_visible(False)
     bbox_style = dict(facecolor="white", edgecolor="none", boxstyle="round, pad=0.1")
+    plt.title(
+        f"Fretboard locations of first 9 flageolets on {root_note} string with notes and detune (ct)"
+    )
+    plt.legend()
+
+    root_idx = PITCH_CLASS_TABLE.index(root_note)
 
     # Reverse harmonics as multiples are drawn on top of eachother.
     for harmonic in reversed(harmonics):
         for numerator in range(1, harmonic):
             distance = scale_length * numerator / harmonic
             num_semitones = freq_ratio_to_semitones(harmonic)
+            rounded_num_semitones = round(num_semitones)
+
+            # Calculate nearest equally tempered note.
+            pitch_class_idx = (root_idx + rounded_num_semitones) % 12
+            pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
+
             # Calculate cent offset from nearest equally tempered note.
-            num_cents = 100 * (num_semitones - round(num_semitones))
+            num_cents = 100 * (num_semitones - rounded_num_semitones)
             rounded_num_cents = round(num_cents)
 
             ax.plot(
@@ -52,7 +64,11 @@ def main():
             ax.text(
                 distance,
                 0,
-                rf"${harmonic}f_0$" + "\n" + rf"${rounded_num_cents:+}$",
+                rf"${harmonic}f_0$"
+                + "\n"
+                + f"{pitch_class}"
+                + "\n"
+                + f"{rounded_num_cents:+}",
                 horizontalalignment="center",
                 verticalalignment="center",
                 bbox=bbox_style,
@@ -66,12 +82,14 @@ def main():
     for fret in frets:
         # Use equal temperament for fret spacing calculations.
         distance = scale_length - scale_length / 2 ** (fret / 12)
+        pitch_class_idx = (root_idx + fret) % 12
+        pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
 
-        ax.plot(distance, 1, color="black", marker="|", ms=50, markeredgewidth=0.5)
+        ax.plot(distance, 1, color="black", marker="|", ms=60, markeredgewidth=0.5)
         ax.text(
             distance,
             1,
-            f"{fret}",
+            f"{fret}" + "\n" + f"{pitch_class}",
             horizontalalignment="center",
             verticalalignment="center",
             bbox=bbox_style,
@@ -95,9 +113,6 @@ def main():
                 verticalalignment="center",
             )
 
-    plt.title(
-        "Fretboard locations of first 9 flageolets with detune (ct) from nearest note"
-    )
     plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
     plt.show()
 

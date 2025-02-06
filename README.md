@@ -38,4 +38,4 @@ Assuming the first frequency is lies on an equally tempered scale, the cent offs
 
 $$ ct = 100 * (st - round(st)) $$
 
-which is also the same measure that can be seen on guitar tuners.
+which is the same measure that can be seen on guitar tuners.

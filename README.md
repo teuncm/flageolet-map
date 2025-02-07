@@ -20,13 +20,11 @@ Fretboards are constructed using [12-tone equal temperament](https://en.wikipedi
 
 $$ 2 ^ {1/12} $$
 
-such that after 12 notes, we reach the same note on the next octave with 2 times the frequency of the previous octave. This tuning is not [pure](https://en.wikipedia.org/wiki/Just_intonation), meaning that intervals (except the octave) are never exact whole number ratios and every note is slightly off tune. An advantage of equal temperament is that the entire octave is divided into equal segments, which is also visible on the fretboard as every successive fret decreases the length of the string by a factor of
+such that after 12 notes, we reach the same note on the next octave with 2 times the frequency of the previous octave. This tuning is not [pure](https://en.wikipedia.org/wiki/Just_intonation), meaning that intervals (except the octave) are never exact whole number ratios and every note is slightly off tune. An advantage of equal temperament is that the entire octave is divided into equal segments. Every successive fret decreases the length of the string by a factor of
 
 $$ 2 ^ {-1/12} $$
 
-This implies that the 12th fret is located halfway between the nut and bridge and the spacing between each fret decreases exponentially, giving rise to the familiar fretboard.
-
-So, where most notes on the fretboard are always slightly off tune, flagiolets are always exactly on tune. Only the octave frets ($12, 24, 36, \dots$) correspond exactly in frequency to some flagiolets ($2, 4, 8, 16, \dots$) as both are equal integer multiples of $f_0$.
+This implies that the 12th fret is located halfway between the nut and bridge and the spacing between each fret decreases exponentially, giving rise to the familiar fretboard. Only the octave frets ($12, 24, 36, \dots$) correspond exactly in frequency to some flagiolets ($2, 4, 8, \dots$) as both produce equal integer multiples of $f_0$.
 
 #### Detune
 

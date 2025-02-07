@@ -92,7 +92,7 @@ def plot_flagiolets(root_note):
 
     for fret in frets:
         # Use equal temperament for fret spacing calculations.
-        distance = scale_length - scale_length / 2 ** (fret / 12)
+        distance = scale_length - scale_length * 2 ** (- fret / 12)
 
         # Calculate distance from root note.
         num_octaves = semitones_to_octaves(fret)
@@ -115,10 +115,11 @@ def plot_flagiolets(root_note):
             bbox=bbox_style,
         )
 
+        marker_distance = scale_length - scale_length * 2 ** (- (fret - 0.5) / 12)
         # Draw fret markers.
         if fret in marked_frets:
             ax.text(
-                distance,
+                marker_distance,
                 0.5,
                 f"●",
                 horizontalalignment="center",
@@ -126,7 +127,7 @@ def plot_flagiolets(root_note):
             )
         if fret in marked_octaves:
             ax.text(
-                distance,
+                marker_distance,
                 0.5,
                 f"●●",
                 horizontalalignment="center",

@@ -30,7 +30,7 @@ So, where most notes on the fretboard are always slightly off tune, flagiolets a
 
 #### Detune
 
-Detune can be measured in [semitones](https://en.wikipedia.org/wiki/Semitone) (st) and more precisely in cents (ct), which is a 100th of a semitone. One semitone is the distance between two consecutive notes on the equally tempered chromatic scale, differing in frequency by a factor of $2 ^ {1/12}$, or $\frac{1}{12}th of an octave. The total number of semitones between two frequencies $f1$ and $f_2$ is therefore determined by their frequency ratio as follows:
+Detune can be measured in [semitones](https://en.wikipedia.org/wiki/Semitone) (st) and more precisely in cents (ct), which is a 100th of a semitone. One semitone is the distance between two consecutive notes on the equally tempered chromatic scale, differing in frequency by a factor of $2 ^ {1/12}$, or $\frac{1}{12}th of an octave. This implies that each successive fret increases the detune from the root note of the string by 1 semitone, cycling the [chromatic scale](https://en.wikipedia.org/wiki/Chromatic_scale). The total number of semitones between two frequencies $f1$ and $f_2$ is therefore determined by their frequency ratio as follows:
 
 $$ st = 12 \cdot log_2(\frac{f_1}{f_2}) $$
 

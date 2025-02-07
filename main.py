@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import numpy as np
 import math
 
 PITCH_CLASS_TABLE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -8,20 +7,22 @@ PITCH_CLASS_TABLE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#",
 # Distance from nut to bridge in %.
 scale_length = 100
 # Number of frets to show.
-frets = np.arange(1, 25)
+frets = range(1, 25)
 # Harmonics to show nodes of.
 harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
-# Root note of string.
-root_note = "E"
 
 
 def main():
+    for root_note in PITCH_CLASS_TABLE:
+        plot_flagiolets(root_note)
+
+
+def plot_flagiolets(root_note):
+    # Figure styling.
     plt.rc("font", size=10)
     plt.rc("font", family="monospace")
 
     _, ax = plt.subplots(figsize=(18, 3.6), layout="constrained")
-
-    # Figure styling.
     ax.axhline(1, alpha=1, color="darkorange", linewidth=1, label="frets")
     ax.axhline(0, alpha=1, color="darkblue", linewidth=1, label="flageolets")
     ax.set_xlim([0, scale_length])
@@ -37,12 +38,21 @@ def main():
 
     root_idx = PITCH_CLASS_TABLE.index(root_note)
 
-    # Reverse harmonics as multiples are drawn on top of eachother.
-    for harmonic in reversed(harmonics):
+    # Draw harmonics.
+    existing_distances = set()
+    for harmonic in harmonics:
         for numerator in range(1, harmonic):
             distance = scale_length * numerator / harmonic
+
+            if distance in existing_distances:
+                continue
+
+            existing_distances.add(distance)
+
+            # Calculate distance from root note.
             num_semitones = freq_ratio_to_semitones(harmonic)
             rounded_num_semitones = round(num_semitones)
+            num_octaves = semitones_to_octaves(num_semitones)
 
             # Calculate nearest equally tempered note.
             pitch_class_idx = (root_idx + rounded_num_semitones) % 12
@@ -55,18 +65,16 @@ def main():
             ax.plot(
                 distance,
                 0,
-                color="black",
+                color="lightgray",
                 marker="|",
                 ms=1000,
-                alpha=0.22,
+                alpha=1,
                 markeredgewidth=1,
             )
             ax.text(
                 distance,
                 0,
-                rf"${harmonic}f_0$"
-                + "\n"
-                + f"{pitch_class}"
+                f"{pitch_class}$^{{{num_octaves + 1}}}$"
                 + "\n"
                 + f"{rounded_num_cents:+}",
                 horizontalalignment="center",
@@ -79,11 +87,19 @@ def main():
     # Mark octaves with two dots.
     marked_octaves = [12, 24, 36]
 
+    # Draw frets.
     for fret in frets:
         # Use equal temperament for fret spacing calculations.
         distance = scale_length - scale_length / 2 ** (fret / 12)
+
+        # Calculate distance from root note.
+        num_octaves = semitones_to_octaves(fret)
+
+        # Pitch class is simply the next note for each consecutive fret.
         pitch_class_idx = (root_idx + fret) % 12
         pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
+
+        octave_str = "" if num_octaves == 0 else f"{num_octaves + 1}"
 
         ax.plot(
             distance, 1, color="black", marker="|", ms=70, alpha=1, markeredgewidth=1
@@ -91,7 +107,7 @@ def main():
         ax.text(
             distance,
             1,
-            f"{fret}" + "\n" + f"{pitch_class}",
+            f"{pitch_class}$^{{{octave_str}}}$",
             horizontalalignment="center",
             verticalalignment="center",
             bbox=bbox_style,
@@ -115,8 +131,7 @@ def main():
                 verticalalignment="center",
             )
 
-    plt.savefig("flageolets.png", bbox_inches="tight", dpi=200)
-    plt.show()
+    plt.savefig(f"output/flageolets_{root_note}.png", bbox_inches="tight", dpi=200)
 
 
 def freq_ratio_to_semitones(freq_ratio):
@@ -124,6 +139,13 @@ def freq_ratio_to_semitones(freq_ratio):
     num_semitones = 12 * math.log(freq_ratio, 2)
 
     return num_semitones
+
+
+def semitones_to_octaves(num_semitones):
+    """Convert semitone distance to octave distance."""
+    num_octaves = math.floor(num_semitones / 12)
+
+    return num_octaves
 
 
 if __name__ == "__main__":

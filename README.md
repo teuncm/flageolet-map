@@ -32,10 +32,10 @@ So, where most notes on the fretboard are always slightly off tune, flagiolets a
 
 Detune can be measured in [semitones](https://en.wikipedia.org/wiki/Semitone) (st) and more precisely in cents (ct), which is a 100th of a semitone. One semitone is the distance between two consecutive notes on the equally tempered chromatic scale, differing in frequency by a factor of $2 ^ {1/12}$, or $\frac{1}{12}th of an octave. The total number of semitones between two frequencies $f1$ and $f_2$ is therefore determined by their frequency ratio as follows:
 
-$$ st = 12*log_2(\frac{f_1}{f_2}) $$
+$$ st = 12 \cdot log_2(\frac{f_1}{f_2}) $$
 
 Assuming the first frequency represents a note on an equally tempered scale, every whole semitone away will also represent a note. Therefore, the signed cent offset of the second frequency from the nearest note is given by
 
-$$ ct = 100 * (st - round(st)) $$
+$$ ct = 100 \cdot (st - round(st)) $$
 
 which is the same measure as commonly seen on digital guitar tuners.

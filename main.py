@@ -77,7 +77,7 @@ def plot_flagiolets(root_note):
             ax.text(
                 distance,
                 0,
-                f"{pitch_class}$^{{{num_octaves + 1}}}$" + num_cents_str,
+                f"{pitch_class}$^{{{num_octaves}}}$" + num_cents_str,
                 horizontalalignment="center",
                 verticalalignment="center",
                 bbox=bbox_style,

@@ -1,6 +1,6 @@
 # Flageolet Map
 
-While learning to play guitar, I stumbled upon the existence of [flageolets](https://en.wikipedia.org/wiki/String_harmonic), which are an alternative way to produce notes on the guitar. Flageolets are seen to be played at the 5th, 7th, 9th and 12th frets, but are they actually located there? This flageolet map shows that all flageolets are offset slightly, except those at fret 12 and 24. Moreover, this map shows all flageolet locations, even those located past the fretboard.
+While learning to play guitar, I stumbled upon the existence of [flageolets](https://en.wikipedia.org/wiki/String_harmonic), which are an alternative way to produce notes on the guitar. Flageolets are seen to be played at the 2nd, 5th, 7th, 9th and 12th frets, but are they actually located there? This flageolet map shows that they are offset slightly, except at fret 12. Moreover, this map shows all flageolet locations, even those located past the fretboard.
 
 ### Theory 
 
@@ -12,11 +12,11 @@ $$ f_0 = \frac{1}{2L} \sqrt{\frac{T}{\mu}} $$
 
 This formula implies that the fundamental frequency of a vibrating string is inversely proportional to its length. As an aside, this also implies that tensioning the string increases the fundamental frequency and making it heavier decreases it, explaining comparatively long and heavy strings on bass guitars to produce sound an octave lower than usual. 
 
-Given the fundamental frequency $f_0$ of any tensioned string, its harmonics will therefore vibrate at $f_0, 2f_0, 3f_0, 4f_0, \dots$ since the successive modes divide the string evenly into vibrating sections of $L, \frac{1}{2}L, \frac{1}{3}L, \frac{1}{4}L, \dots$, separated by nodes that appear to stand still. A flageolet is played on string instruments by pressing the finger lightly on these nodes. When the string is plucked this way, all harmonics that don't have a node at the finger position are dampened, making the string vibrate at the resulting higher fundamental frequency and its respective harmonics.
+Given the fundamental frequency $f_0$ of any tensioned string, its harmonics will therefore vibrate at $f_0, 2f_0, 3f_0, 4f_0, \dots$ since the successive modes divide the string evenly into vibrating sections of $L, \frac{1}{2}L, \frac{1}{3}L, \frac{1}{4}L, \dots$, separated by nodes that appear to stand still. A flageolet is played on string instruments by pressing the finger lightly on these nodes. When the string is plucked this way, all harmonics without a node at the finger position are dampened, making the string vibrate at the resulting higher fundamental frequency and its respective harmonics.
 
 #### Fretboard
 
-Fretboards are constructed using 12-tone equal temperament, which increases the frequency of every successive note by a factor of
+Fretboards are constructed using [12-tone equal temperament](https://en.wikipedia.org/wiki/12_equal_temperament), which increases the frequency of every successive note by a factor of
 
 $$ 2 ^ {1/12} $$
 
@@ -30,11 +30,11 @@ So, where most notes on the fretboard are always slightly off tune, flagiolets a
 
 #### Detune
 
-Detune can be measured in cents (ct) and semitones (st). One semitone is exactly the distance between two consecutive notes on the equally tempered chromatic scale, i.e. a differing by a factor of $2 ^ {1/12}$. 12 semitones make up an entire octave. The total number of semitones between two frequencies $f1$ and $f_2$ is therefore determined by their frequency ratio as follows:
+Detune can be measured in [semitones](https://en.wikipedia.org/wiki/Semitone) (st) and more precisely in cents (ct), which is a 100th of a semitone. One semitone is the distance between two consecutive notes on the equally tempered chromatic scale, differing in frequency by a factor of $2 ^ {1/12}$, or $\frac{1}{12}th of an octave. The total number of semitones between two frequencies $f1$ and $f_2$ is therefore determined by their frequency ratio as follows:
 
 $$ st = 12*log_2(\frac{f_1}{f_2}) $$
 
-Assuming the first frequency lies exactly on an equally tempered scale, every whole semitone away will also lie on the equally tempered scale. Therefore, the signed cent offset of the second frequency away from the nearest note on the equally tempered scale is given by
+Assuming the first frequency represents a note on an equally tempered scale, every whole semitone away will also represent a note. Therefore, the signed cent offset of the second frequency from the nearest note is given by
 
 $$ ct = 100 * (st - round(st)) $$
 

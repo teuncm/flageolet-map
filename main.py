@@ -31,19 +31,20 @@ def plot_flagiolets(root_note):
     ax.set_xlabel("Distance from nut to bridge (%)")
     ax.get_yaxis().set_visible(False)
     bbox_style = dict(facecolor="white", edgecolor="none", boxstyle="round, pad=0.1")
-    plt.title(
-        f"Fretboard locations of first 9 flageolets on {root_note} string with notes and detune (ct)"
-    )
+    plt.title(f"Locations of first 9 flageolets on {root_note}-string with detune (ct)")
     plt.legend()
 
+    # Index of root note in pitch class table. Used later to calculate notes.
     root_idx = PITCH_CLASS_TABLE.index(root_note)
 
-    # Draw harmonics.
     existing_distances = set()
     for harmonic in harmonics:
+        # Every nth harmonic has n-1 nodes on the string. Iterate through
+        # all of them.
         for numerator in range(1, harmonic):
             distance = scale_length * numerator / harmonic
 
+            # Check for existing lower-order nodes.
             if distance in existing_distances:
                 continue
 
@@ -62,6 +63,8 @@ def plot_flagiolets(root_note):
             num_cents = 100 * (num_semitones - rounded_num_semitones)
             rounded_num_cents = round(num_cents)
 
+            # Draw flageolets.
+            num_cents_str = "" if rounded_num_cents == 0 else f"\n{rounded_num_cents:+}"
             ax.plot(
                 distance,
                 0,
@@ -74,9 +77,7 @@ def plot_flagiolets(root_note):
             ax.text(
                 distance,
                 0,
-                f"{pitch_class}$^{{{num_octaves + 1}}}$"
-                + "\n"
-                + f"{rounded_num_cents:+}",
+                f"{pitch_class}$^{{{num_octaves + 1}}}$" + num_cents_str,
                 horizontalalignment="center",
                 verticalalignment="center",
                 bbox=bbox_style,
@@ -87,7 +88,6 @@ def plot_flagiolets(root_note):
     # Mark octaves with two dots.
     marked_octaves = [12, 24, 36]
 
-    # Draw frets.
     for fret in frets:
         # Use equal temperament for fret spacing calculations.
         distance = scale_length - scale_length / 2 ** (fret / 12)
@@ -99,20 +99,21 @@ def plot_flagiolets(root_note):
         pitch_class_idx = (root_idx + fret) % 12
         pitch_class = PITCH_CLASS_TABLE[pitch_class_idx]
 
-        octave_str = "" if num_octaves == 0 else f"{num_octaves + 1}"
-
+        # Draw frets.
+        octave_str = "" if num_octaves == 0 else f"$^{{{num_octaves}}}$"
         ax.plot(
             distance, 1, color="black", marker="|", ms=70, alpha=1, markeredgewidth=1
         )
         ax.text(
             distance,
             1,
-            f"{pitch_class}$^{{{octave_str}}}$",
+            f"{pitch_class}{octave_str}",
             horizontalalignment="center",
             verticalalignment="center",
             bbox=bbox_style,
         )
 
+        # Draw fret markers.
         if fret in marked_frets:
             ax.text(
                 distance,
@@ -121,7 +122,6 @@ def plot_flagiolets(root_note):
                 horizontalalignment="center",
                 verticalalignment="center",
             )
-
         if fret in marked_octaves:
             ax.text(
                 distance,

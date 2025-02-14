@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import matplotlib.patches as patches
 import math
 
 PITCH_CLASS_TABLE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -17,6 +18,9 @@ harmonics = [2, 3, 4, 5, 6, 7, 8, 9]
 def main():
     for root_note in PITCH_CLASS_TABLE:
         plot_flagiolets(root_note)
+        print("Finished", root_note, "string")
+
+    print("Done!")
 
 
 def plot_flagiolets(root_note):
@@ -67,19 +71,19 @@ def plot_flagiolets(root_note):
 
             # Draw flageolets.
             num_cents_str = "" if rounded_num_cents == 0 else f"\n{rounded_num_cents:+}"
-            ax.plot(
-                distance,
-                0,
+            ax.eventplot(
+                [distance],
+                lineoffsets=0,
+                linelengths=3,
+                linewidths=1,
                 color="lightgray",
-                marker="|",
-                ms=1000,
-                alpha=1,
-                markeredgewidth=1,
             )
             ax.text(
                 distance,
                 0,
-                f"{pitch_class}$^{{{num_octaves}}}$" + num_cents_str,
+                f"${harmonic}f_0$"
+                + f"\n{pitch_class}$^{{{num_octaves}}}$"
+                + num_cents_str,
                 horizontalalignment="center",
                 verticalalignment="center",
                 bbox=bbox_style,
@@ -92,7 +96,7 @@ def plot_flagiolets(root_note):
 
     for fret in frets:
         # Use equal temperament for fret spacing calculations.
-        distance = scale_length - scale_length * 2 ** (- fret / 12)
+        distance = scale_length - scale_length * 2 ** (-fret / 12)
 
         # Calculate distance from root note.
         num_octaves = semitones_to_octaves(fret)
@@ -103,19 +107,19 @@ def plot_flagiolets(root_note):
 
         # Draw frets.
         octave_str = "" if num_octaves == 0 else f"$^{{{num_octaves}}}$"
-        ax.plot(
-            distance, 1, color="black", marker="|", ms=70, alpha=1, markeredgewidth=1
+        ax.eventplot(
+            [distance], lineoffsets=1, linelengths=0.75, linewidths=1, color="black"
         )
         ax.text(
             distance,
             1,
-            f"{pitch_class}{octave_str}",
+            f"{fret}" + f"\n{pitch_class}{octave_str}",
             horizontalalignment="center",
             verticalalignment="center",
             bbox=bbox_style,
         )
 
-        marker_distance = scale_length - scale_length * 2 ** (- (fret - 0.5) / 12)
+        marker_distance = scale_length - scale_length * 2 ** (-(fret - 0.5) / 12)
         # Draw fret markers.
         if fret in marked_frets:
             ax.text(
@@ -133,6 +137,25 @@ def plot_flagiolets(root_note):
                 horizontalalignment="center",
                 verticalalignment="center",
             )
+
+        rect_left = scale_length - scale_length * 2 ** (-(fret - 0.75) / 12)
+        rect_right = scale_length - scale_length * 2 ** (-(fret - 0.25) / 12)
+        rect_width = rect_right - rect_left
+        rect_height = 0.4
+
+        if fret in marked_frets or fret in marked_octaves:
+            # Create a Rectangle patch
+            rect = patches.Rectangle(
+                (rect_left, 1 - rect_height / 2),
+                rect_width,
+                rect_height,
+                linewidth=1,
+                edgecolor="gray",
+                facecolor="gray",
+            )
+
+            # Add the patch to the Axes
+            ax.add_patch(rect)
 
     plt.savefig(f"output/flageolets_{root_note}.png", bbox_inches="tight", dpi=200)
 
